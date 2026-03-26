@@ -942,6 +942,7 @@ export namespace Config {
       autoupdate: z
         .union([z.boolean(), z.literal("notify")])
         .optional()
+        .catch(false)
         .describe(
           "Automatically update to the latest version. Set to true to auto-update, false to disable, or 'notify' to show update notifications",
         ),

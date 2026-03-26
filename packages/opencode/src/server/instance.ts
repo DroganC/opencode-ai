@@ -299,11 +299,13 @@ export const InstanceRoutes = (upgrade: UpgradeWebSocket, app: Hono = new Hono()
           return c.json({ error: "Not Found" }, 404)
         }
       } else {
-        const response = await proxy(`https://app.opencode.ai${path}`, {
+        const webUrl = Flag.OPENCODE_WEB_URL || "https://app.opencode.ai"
+        const webHost = new URL(webUrl).host
+        const response = await proxy(`${webUrl}${path}`, {
           ...c.req,
           headers: {
             ...c.req.raw.headers,
-            host: "app.opencode.ai",
+            host: webHost,
           },
         })
         const match = response.headers.get("content-type")?.includes("text/html")
